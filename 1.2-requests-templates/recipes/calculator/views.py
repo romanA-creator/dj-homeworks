@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 
 DATA = {
@@ -28,3 +29,14 @@ DATA = {
 #     'ингредиент2': количество2,
 #   }
 # }
+
+def recipe(request, b):
+    rec = b
+    # Вывод рецепта
+    data = DATA.get(rec)
+    # Вывод рецепта
+    servings = int(request.GET.get("servings", 1))
+    scaled_data = {ingredient: quantity * servings for ingredient, quantity in data.items()}
+    context = {'recipe': scaled_data}
+    print(context)
+    return render(request, 'calculator/index.html', context)
